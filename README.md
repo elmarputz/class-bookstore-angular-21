@@ -3,7 +3,7 @@
 [Edit on StackBlitz ⚡️](https://stackblitz.com/edit/angular-ivy-l1hhmb)
 
 # Docker Setup 
-* run ```docker-compose run angular```
+* run ```docker-compose run --service-ports angular```
 * run ```npm install````
 
 # Launch App 
