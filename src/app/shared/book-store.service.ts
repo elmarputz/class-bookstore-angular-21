@@ -8,7 +8,7 @@ import { catchError, retry} from 'rxjs/operators';
 export class BookStoreService {
 
   private api = 'https://bookstore21.putz.kwmhgb.at/api';
-
+  
 
   constructor(private http: HttpClient) { }
 
