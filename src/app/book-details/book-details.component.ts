@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Book } from '../shared/book';
 import { BookStoreService } from '../shared/book-store.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { subscribeOn } from 'rxjs/operators';
 
 @Component({
   selector: 'bs-book-details',
@@ -14,17 +15,27 @@ export class BookDetailsComponent implements OnInit {
 
   constructor(
     private bs: BookStoreService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute, 
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
     const params = this.route.snapshot.params;  
-    this.book = this.bs.getSingle(params['isbn']);
+    this.bs.getSingle(params['isbn'])
+      .subscribe(b => this.book = b);
   }
 
   getRating (num: number) {
     return new Array(num);
   }
 
+
+  removeBook() {
+    if (confirm('Buch löschen? Sind Sie sicher?')) {
+      this.bs.remove(this.book.isbn) 
+        .subscribe(res => this.router.navigate(['../'], { relativeTo: this.route }));
+
+    }
+  }
 
 }

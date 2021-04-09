@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { BookListComponent } from './book-list/book-list.component';
@@ -13,7 +14,7 @@ import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule, AppRoutingModule ],
+  imports:      [ BrowserModule, FormsModule, AppRoutingModule, HttpClientModule ],
   declarations: [ AppComponent, BookListComponent, BookListItemComponent, BookDetailsComponent, HomeComponent ],
   bootstrap:    [ AppComponent ],
   providers: [{provide: APP_BASE_HREF, useValue: '/'}, BookStoreService]
