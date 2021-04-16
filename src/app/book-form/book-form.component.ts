@@ -60,6 +60,7 @@ export class BookFormComponent implements OnInit {
       ], 
       description: this.book.description,
       published: this.book.published, 
+      rating: [this.book.rating, [Validators.min(0), Validators.max(10)]]
 
     });
 

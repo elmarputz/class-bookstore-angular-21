@@ -16,17 +16,26 @@
 
     <div class="field" [class.disabled]="isUpdatingBook">
         <input formControlName="isbn">
+        <div *ngIf="errors.isbn" class="ui negative message"> {{ errors.isbn }} </div>   
     </div>    
 
 
     <div class="field">
         <label>Erscheinungsdatum</label>
         <input type="date" formControlName="published">
+        <div *ngIf="errors.published" class="ui negative message"> {{ errors.published }} </div>   
     </div>
 
     <div class="field">
         <label>Beschreibung</label>
         <textarea formControlName="description" rows="3"></textarea>
+    </div>
+
+    <div class="field">
+        <label>Rating</label>
+        <input type="number" formControlName="rating">
+        <div *ngIf="errors.rating" class="ui negative message"> {{ errors.rating }} </div>
+
     </div>
 
 <button type="submit" class="ui button" [disabled]="bookForm.invalid">Speichern</button>
