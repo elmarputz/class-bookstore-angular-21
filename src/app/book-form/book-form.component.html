@@ -1,8 +1,33 @@
-<h1> Buch Form</h1>
+<h1>Buch Form</h1>
 
 <form class="ui large form" [formGroup]="bookForm" (ngSubmit)="submitForm()">
+    <input type="hidden" name="id">
+    <div class="field">
+        <label>Buchtitel</label>
+        <input formControlName="title">
+         <div *ngIf="errors.title" class="ui negative message"> {{ errors.title }} </div>   
+    </div>
+
+    <div class="field">
+        <label>Untertitel</label>
+        <input formControlName="subtitle">
+
+    </div>
+
+    <div class="field" [class.disabled]="isUpdatingBook">
+        <input formControlName="isbn">
+    </div>    
 
 
+    <div class="field">
+        <label>Erscheinungsdatum</label>
+        <input type="date" formControlName="published">
+    </div>
+
+    <div class="field">
+        <label>Beschreibung</label>
+        <textarea formControlName="description" rows="3"></textarea>
+    </div>
 
 <button type="submit" class="ui button" [disabled]="bookForm.invalid">Speichern</button>
 </form>
