@@ -6,6 +6,7 @@ import { BookFactory } from '../shared/book-factory';
 import { BookStoreService } from "../shared/book-store.service";
 import { BookFormErrorMessages } from "./book-form-error-messages";
 import { Book, Image } from "../shared/book";
+import { BookValidators} from "../shared/book-validators";
 
 
 
@@ -28,7 +29,7 @@ export class BookFormComponent implements OnInit {
     private fb: FormBuilder, 
     private bs: BookStoreService, 
     private route: ActivatedRoute, 
-    private router: Router
+    private router: Router,
 
 
   ) { }
@@ -57,11 +58,8 @@ export class BookFormComponent implements OnInit {
       isbn: [
         this.book.isbn, [
           Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(13)
-
-        ]
-      ], 
+        ], this.isUpdatingBook ? null : BookValidators.isbnExists(this.bs) 
+      ],  
       description: this.book.description,
       published: this.book.published, 
       rating: [this.book.rating, [Validators.min(0), Validators.max(10)]],
@@ -112,7 +110,11 @@ export class BookFormComponent implements OnInit {
         this.router.navigate(["../../books", book.isbn], {
           relativeTo: this.route
         });
+      },
+      err => {
+        console.log("Fehler ist passiert", err)
       });
+
     }  else {
       book.user_id = 1;
       console.log(book);
@@ -123,7 +125,10 @@ export class BookFormComponent implements OnInit {
           relativeTo: this.route
         });
 
-      })
+      },
+      err => {
+        console.log("Fehler ist passiert", err)
+      });
 
     }
 

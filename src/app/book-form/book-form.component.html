@@ -15,6 +15,7 @@
     </div>
 
     <div class="field" [class.disabled]="isUpdatingBook">
+        <label>ISBN</label>
         <input formControlName="isbn">
         <div *ngIf="errors.isbn" class="ui negative message"> {{ errors.isbn }} </div>   
     </div>    
