@@ -105,7 +105,7 @@ export class BookFormComponent implements OnInit {
       
     book.authors = this.book.authors;
       
-    console.log(book);
+
 
     if (this.isUpdatingBook) {
       this.bs.update(book).subscribe(res => {
@@ -113,7 +113,17 @@ export class BookFormComponent implements OnInit {
           relativeTo: this.route
         });
       });
+    }  else {
+      book.user_id = 1;
+      console.log(book);
+      this.bs.create(book).subscribe(res => {
+        this.book = BookFactory.empty();
+        this.bookForm.reset(BookFactory.empty());
+        this.router.navigate(["../books"], {
+          relativeTo: this.route
+        });
 
+      })
 
     }
 
