@@ -5,7 +5,8 @@ import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from "@ang
 import { BookFactory } from '../shared/book-factory';
 import { BookStoreService } from "../shared/book-store.service";
 import { BookFormErrorMessages } from "./book-form-error-messages";
-import { ThrowStmt } from "@angular/compiler";
+import { Book, Image } from "../shared/book";
+
 
 
 @Component({
@@ -20,6 +21,7 @@ export class BookFormComponent implements OnInit {
   isUpdatingBook = false; 
   images: FormArray;
   errors: { [key: string]: string } = {};
+
 
 
   constructor(
@@ -46,6 +48,8 @@ export class BookFormComponent implements OnInit {
   }
 
   initBook() {
+
+    this.buildThumbnailsArray();
     this.bookForm = this.fb.group({
       id: this.book.id,  
       title: [this.book.title, Validators.required], 
@@ -60,7 +64,8 @@ export class BookFormComponent implements OnInit {
       ], 
       description: this.book.description,
       published: this.book.published, 
-      rating: [this.book.rating, [Validators.min(0), Validators.max(10)]]
+      rating: [this.book.rating, [Validators.min(0), Validators.max(10)]],
+      images: this.images, 
 
     });
 
@@ -68,6 +73,53 @@ export class BookFormComponent implements OnInit {
       this.updateErrorMessages()
     );
   }
+
+
+  buildThumbnailsArray() {
+    this.images = this.fb.array([]);
+
+    for (let img of this.book.images) {
+      let fg = this.fb.group({
+        id: new FormControl(img.id), 
+        url: new FormControl (img.url, [Validators.required]),
+        title: new FormControl(img.title, [Validators.required])
+      });
+      this.images.push(fg);
+
+    }
+
+  }
+
+
+  addThumbnailControl() {
+    this.images.push(this.fb.group({ url:null, title:null}));
+  }
+
+  submitForm() {
+
+    this.bookForm.value.images = this.bookForm.value.images.filter(
+      thumbnail => thumbnail.url
+    ); 
+
+    const book: Book = BookFactory.fromObject(this.bookForm.value);
+      
+    book.authors = this.book.authors;
+      
+    console.log(book);
+
+    if (this.isUpdatingBook) {
+      this.bs.update(book).subscribe(res => {
+        this.router.navigate(["../../books", book.isbn], {
+          relativeTo: this.route
+        });
+      });
+
+
+    }
+
+  }
+
+
 
   updateErrorMessages() {
     console.log("form invalid? " + this.bookForm.invalid);
