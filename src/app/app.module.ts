@@ -14,11 +14,12 @@ import { BookStoreService } from './shared/book-store.service';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BookFormComponent } from './book-form/book-form.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   imports:      [ BrowserModule, FormsModule, AppRoutingModule, 
                   HttpClientModule, ReactiveFormsModule ],
-  declarations: [ AppComponent, BookListComponent, BookListItemComponent, BookDetailsComponent, HomeComponent, BookFormComponent ],
+  declarations: [ AppComponent, BookListComponent, BookListItemComponent, BookDetailsComponent, HomeComponent, BookFormComponent, LoginComponent ],
   bootstrap:    [ AppComponent ],
   providers: [{provide: APP_BASE_HREF, useValue: '/'}, BookStoreService]
 })
