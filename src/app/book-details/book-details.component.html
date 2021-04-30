@@ -5,7 +5,7 @@
    [src]="book.images[0].url">
     </div>
     <div class="twelve wide column">
-      <h1 class="ui header">{{ book.title }}</h1>
+      <h1 class="ui header">{{ book.title | uppercase | reverse }}</h1>
       <h3 class="ui header">{{ book.subtitle }}</h3>
       <div class="ui divider"></div>
       <div class="ui grid">
@@ -21,7 +21,7 @@
         </div>
         <div class="four wide column">
           <h4 class="ui header">Erschienen</h4>
-          {{ book.published }}
+          {{ book.published | date:'longDate' }}
         </div>
         <div class="four wide column">
           <h4 class="ui header">Rating</h4>
@@ -52,8 +52,3 @@
   [routerLink]="['../../admin', book?.isbn]">
   <i class="write icon"></i> Bearbeiten
 </a>
-
-Create 
-Read 
-Update
-Delete

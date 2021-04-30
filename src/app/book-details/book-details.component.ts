@@ -4,6 +4,7 @@ import { BookStoreService } from '../shared/book-store.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { subscribeOn } from 'rxjs/operators';
 import { AuthenticationService } from '../shared/authentication.service';
+import { CustomPipe } from '../shared/custom.pipe';
 
 @Component({
   selector: 'bs-book-details',

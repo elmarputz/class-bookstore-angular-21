@@ -18,15 +18,27 @@ import { LoginComponent } from './login/login.component';
 import { AuthenticationService } from './shared/authentication.service';
 import { TokenInterceptorService } from './shared/token-interceptor.service';
 
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+import { CustomPipe } from './shared/custom.pipe';
+
+registerLocaleData(localeDe);
+
 @NgModule({
   imports:      [ BrowserModule, FormsModule, AppRoutingModule, 
                   HttpClientModule, ReactiveFormsModule ],
-  declarations: [ AppComponent, BookListComponent, BookListItemComponent, BookDetailsComponent, HomeComponent, BookFormComponent, LoginComponent ],
+  declarations: [ AppComponent, BookListComponent, BookListItemComponent, BookDetailsComponent, HomeComponent, BookFormComponent, LoginComponent, CustomPipe ],
   bootstrap:    [ AppComponent ],
-  providers: [{provide: APP_BASE_HREF, useValue: '/'}, BookStoreService, AuthenticationService, {
-    provide: HTTP_INTERCEPTORS,
-    useClass: TokenInterceptorService, 
-    multi: true
-  }]
+  providers: [{
+      provide: APP_BASE_HREF, 
+      useValue: '/'}, 
+     BookStoreService, 
+     { provide: LOCALE_ID, useValue: 'de' },
+     AuthenticationService, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService, 
+      multi: true
+    }]
 })
 export class AppModule { }
